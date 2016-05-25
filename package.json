@@ -1,0 +1,30 @@
+{
+  "name": "koa-simple-session",
+  "description": "koa session store by file, redis or others",
+  "version": "0.0.1",
+  "author": "Tree Xie <vicansocanbico@gmail.com>",
+  "keywords": [
+    "koa",
+    "middleware",
+    "session"
+  ],
+  "scripts": {
+    "test": "node ./node_modules/.bin/eslint ./lib/*.js && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/*.js --"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "copy-to": "^2.0.1",
+    "debug": "^2.2.0",
+    "uid-safe": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.0",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3"
+  }
+}
