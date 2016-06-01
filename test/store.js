@@ -15,8 +15,7 @@ describe('store', () => {
 
   it('get data success', done => {
     store.get(sid).then(data => {
-      console.dir(data);
-      // assert.equal(data.sid, sid);
+      assert.equal(data.sid, sid);
       done();
     }).catch(done);
   });
