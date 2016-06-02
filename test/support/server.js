@@ -4,7 +4,6 @@ const Store = require('../../lib/store');
 const Redis = require('koa-simple-redis');
 const session = require('../..');
 const uid = require('uid-safe').sync;
-const store = new Store(new Redis());
 const app = new Koa();
 const http = require('http');
 
@@ -12,6 +11,13 @@ app.name = 'koa-session-test';
 app.outputErrors = true;
 app.keys = ['keys', 'keykeys'];
 app.proxy = true;
+
+app.use((ctx, next) => {
+  if (ctx.query.force_session_id) {
+    ctx.sessionId = ctx.query.force_session_id;
+  }
+  return next();
+});
 
 app.use(session({
   key: 'koss:test_sid',
@@ -21,9 +27,9 @@ app.use(session({
     maxage: 86400,
     path: '/session',
   },
-  store: store,
+  store: new Redis(),
   genSid: (len, ctx) => {
-    return uid(len) + ctx.request.query.test_sid_append;
+    return uid(len) + ctx.query.test_sid_append;
   },
   beforeSave: (ctx, session) => {
     session.path = ctx.path;
@@ -41,7 +47,7 @@ app.use(session({
     path: '/session',
   },
   genSid: (len, ctx) => {
-    return uid(len) + ctx.request.query.test_sid_append;
+    return uid(len) + ctx.query.test_sid_append;
   },
 }));
 
@@ -76,7 +82,7 @@ function regenerate(ctx) {
 }
 
 app.use(ctx => {
-  switch (ctx.url) {
+  switch (ctx.path) {
     case '/favicon.ico':
       ctx.status = 404;
       break;
@@ -113,7 +119,7 @@ app.use(ctx => {
     case '/session/regenerateWithData':
       ctx.session.foo = 'bar';
       return regenerate(ctx).then(() => {
-        ctx.body = { foo: this.session.foo, hasSession: this.session !== undefined };
+        ctx.body = { foo: ctx.session.foo, hasSession: ctx.session !== undefined };
       });
       break;
     default:
