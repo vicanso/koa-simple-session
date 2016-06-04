@@ -22,7 +22,7 @@ $ npm install koa-simple-session
 'use strict';
 const Koa = require('koa');
 const Redis = require('koa-simple-redis');
-const session = require('..');
+const session = require('koa-simple-session');
 const app = new Koa();
 
 function get(ctx) {
