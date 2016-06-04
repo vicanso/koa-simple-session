@@ -1,6 +1,5 @@
 'use strict';
 const Koa = require('koa');
-const Store = require('../../lib/store');
 const Redis = require('koa-simple-redis');
 const session = require('../..');
 const uid = require('uid-safe').sync;
@@ -56,6 +55,12 @@ function get(ctx) {
   ctx.session.count++;
   ctx.body = ctx.session.count;
 }
+function freeze(ctx) {
+  ctx.session.count = ctx.session.count || 0;
+  ctx.session.count++;
+  Object.freeze(ctx.session);
+  ctx.body = ctx.session.count;
+}
 function nothing(ctx) {
   ctx.body = ctx.session.count;
 }
@@ -100,6 +105,9 @@ app.use(ctx => {
       break;
     case '/session/get':
       get(ctx);
+      break;
+    case '/session/freeze':
+      freeze(ctx);
       break;
     case '/session/nothing':
       nothing(ctx);
