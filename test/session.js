@@ -31,7 +31,20 @@ describe('kog-simple-session', () => {
     request(app)
     .get('/session/freeze')
     .set('cookie', cookie)
-    .expect('3', done);
+    .expect('3', (err, res) => {
+      if(err) {
+        return done(err);
+      }
+      request(app)
+      .get('/session/freeze')
+      .expect('1', (err, res) => {
+        if (err) {
+          return done(err);
+        }
+        assert(!res.get('Set-Cookie'));
+        done();
+      });
+    });
   });
 
   it('should GET /session/httponly ok', done => {
