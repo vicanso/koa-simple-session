@@ -109,7 +109,7 @@ app.listen(3000);
     signed: true,
     maxAge: 24 * 60 * 60 * 1000,
   }
-
+  ```
   For a full list of cookie options see [expressjs/cookies](https://github.com/expressjs/cookies#cookiesset-name--value---options--).
   
   if you set`cookie.maxage` to `null`, meaning no "expires" parameter is set so the cookie becomes a browser-session cookie. When the user closes the browser the cookie (and session) will be removed.
