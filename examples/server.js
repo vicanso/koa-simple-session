@@ -39,6 +39,13 @@ app.proxy = true;
 
 app.use(session({
   store: new Redis(),
+  key: 'my-cookie-key',
+  prefix: 'my-session-store-prefix:',
+  ttl: 24 * 3600 * 1000,
+  errorHandler: (err, type, ctx) => {
+    console.error(err);
+  },
+  reconnectTimeout: 5 * 1000,
 }));
 
 app.use(ctx => {

@@ -100,22 +100,22 @@ app.listen(3000);
  * `valid`: valid(ctx, session), valid session value before use it
  * `beforeSave`: beforeSave(ctx, session), hook before save session
  * `store`: session store instance. It can be any Object that has the methods `set`, `get`, `destroy`
-  * `cookie`: session cookie settings, defaulting to
-    ```js
-    {
-      path: '/',
-      httpOnly: true,
-      maxage: null,
-      rewrite: true,
-      signed: true
-    }
+ * `cookie`: session cookie settings, defaulting to
+  ```js
+  {
+    httpOnly: true,
+    path: '/',
+    overwrite: true,
+    signed: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  }
 
-    For a full list of cookie options see [expressjs/cookies](https://github.com/expressjs/cookies#cookiesset-name--value---options--).
-    
-    if you set`cookie.maxage` to `null`, meaning no "expires" parameter is set so the cookie becomes a browser-session cookie. When the user closes the browser the cookie (and session) will be removed.
-    
-    Notice that `ttl` is different from `cookie.maxage`, `ttl` set the expire time of sessionStore. So if you set `cookie.maxage = null`, and `ttl=ms('1d')`, the session will expired after one day, but the cookie will destroy when the user closes the browser.
-    And mostly you can just ignore `options.ttl`, `koa-simple-session` will parse `cookie.maxage` as the tll.
+  For a full list of cookie options see [expressjs/cookies](https://github.com/expressjs/cookies#cookiesset-name--value---options--).
+  
+  if you set`cookie.maxage` to `null`, meaning no "expires" parameter is set so the cookie becomes a browser-session cookie. When the user closes the browser the cookie (and session) will be removed.
+  
+  Notice that `ttl` is different from `cookie.maxage`, `ttl` set the expire time of sessionStore. So if you set `cookie.maxage = null`, and `ttl=ms('1d')`, the session will expired after one day, but the cookie will destroy when the user closes the browser.
+  And mostly you can just ignore `options.ttl`, `koa-simple-session` will parse `cookie.maxage` as the tll.
 
 ## Hooks
 
