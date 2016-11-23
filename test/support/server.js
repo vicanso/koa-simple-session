@@ -23,7 +23,7 @@ app.use(session({
   prefix: 'koss:test',
   ttl: 1000,
   cookie: {
-    maxage: 86400,
+    maxAge: 86400,
     path: '/session',
   },
   store: new Redis(),
