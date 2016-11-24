@@ -232,4 +232,26 @@ describe('kog-simple-session', () => {
       .expect({ /* foo: undefined, */ hasSession: true }, done);
   });
 
+  it('should set expire success', function(done) {
+    this.timeout(10 * 1000);
+    const agent = request.agent(app);
+    agent
+    .get('/session/get')
+    .expect(/.+/, (err, res) => {
+      const firstId = res.body;
+      assert.equal(firstId, 1);
+      agent.get('/session/expire')
+        .expect('/.+/', (err, res) => {
+          assert.equal(res.status, 204);
+          setTimeout(() => {
+            agent.get('/session/all')
+              .expect('/.+/', (err, res) => {
+                assert.equal(res.body.count, undefined)
+                done();
+              });
+          }, 3 * 1000);
+        });
+    });
+  });
+
 });

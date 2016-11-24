@@ -21,7 +21,7 @@ app.use((ctx, next) => {
 app.use(session({
   key: 'koss:test_sid',
   prefix: 'koss:test',
-  ttl: 1000,
+  ttl: 1000 * 1000,
   cookie: {
     maxAge: 86400,
     path: '/session',
@@ -85,6 +85,9 @@ function regenerate(ctx) {
     getId(ctx);
   });
 }
+function getSession(ctx) {
+  ctx.body = ctx.session;
+}
 
 app.use(ctx => {
   switch (ctx.path) {
@@ -130,6 +133,12 @@ app.use(ctx => {
         ctx.body = { foo: ctx.session.foo, hasSession: ctx.session !== undefined };
       });
       break;
+    case '/session/expire':
+      return ctx.refreshSessionTTL(1).then(() => {
+        ctx.body = null;
+      });
+    case '/session/all':
+      return getSession(ctx);
     default:
       other(ctx);
   }
