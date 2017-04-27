@@ -1,7 +1,7 @@
 {
   "name": "koa-simple-session",
   "description": "koa session store by file, redis or others",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Tree Xie <vicansocanbico@gmail.com>",
   "repository": {
     "type": "git",
