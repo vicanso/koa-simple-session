@@ -124,7 +124,7 @@ app.listen(3000);
 
 ## Session Store
 
-You can use any other store to replace the default MemoryStore, it just needs to follow this api:
+You can use any other store to replace the default FileStore, it just needs to follow this api:
 
 * `get(sid)`: get session object by sid
 * `set(sid, sess, ttl)`: set session object for sid, with a ttl (in ms)
